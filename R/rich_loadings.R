@@ -105,7 +105,7 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
 
   ggplot(clr_matrix_sel_melt,aes(clr_matrix_sel_melt[,Y_name],y = feature, fill = clr)) +
     geom_tile(colour = "white") +
-    coord_equal() +
+    coord_fixed() +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45,hjust = 1,vjust = 1),
           axis.text.y = element_blank(),
