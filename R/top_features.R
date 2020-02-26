@@ -40,6 +40,8 @@ HotLoadings.top_features <- function(data.splsda, feature_names, component = c("
   # Generate variable associated with component
   # Check Y loadings
   Y_loadings <- data.splsda$loadings$Y[,component]
+  stronger_index <- which(abs(Y_loadings) == max(Y_loadings))
+  Y_loadings <- Y_loadings[stronger_index]
   loadings_df$comparison <- ifelse(loadings_df$loadings < 0,names(Y_loadings)[which(Y_loadings < 0)],names(Y_loadings)[which(Y_loadings > 0)])
   # Selection top n features
   top_features <- loadings_df[1:n_top,]
