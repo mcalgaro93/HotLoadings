@@ -12,27 +12,27 @@
 #' @examples
 #' library(phyloseq)
 #' library(mixOmics)
-#' diverse.16S = mixOmics::diverse.16S
+#' # diverse.16S = mixOmics::diverse.16S
 #'
 #' # the 16S normalised data
-#' diverse.TSS = diverse.16S$data.TSS
+#' # diverse.TSS = diverse.16S$data.TSS
 #' # the outcome
-#' Y = diverse.16S$bodysite
+#' # Y = diverse.16S$bodysite
 #' # unique ID of each individual for multilevel analysis
-#' sample = diverse.16S$sample
+#' # sample = diverse.16S$sample
 #'
 #' # after several steps and tuning
-#' select.keepX = c(20,20,20)
-#' diverse.splsda = splsda(diverse.TSS, Y, ncomp = 3, logratio = 'CLR', multilevel = sample, keepX = select.keepX)
+#' # select.keepX = c(20,20,20)
+#' # diverse.splsda = splsda(diverse.TSS, Y, ncomp = 3, logratio = 'CLR', multilevel = sample, keepX = select.keepX)
 #'
 #' # for feature names we should use a phyloseq object
-#' diverse.ps <- phyloseq(otu_table(diverse.16S$data.raw,taxa_are_rows = FALSE),sample_data(diverse.16S$indiv),tax_table(diverse.16S$taxonomy))
+#' # diverse.ps <- phyloseq(otu_table(diverse.16S$data.raw,taxa_are_rows = FALSE),sample_data(diverse.16S$indiv),tax_table(diverse.16S$taxonomy))
 #'
-#' feature_names <- HotLoadings.names(PSOBJ = diverse.ps, format = "short")
+#' # feature_names <- HotLoadings.names(PSOBJ = diverse.ps, format = "short")
 #'
-#' HotLoadings.top_features(data.splsda = diverse.splsda,feature_names = feature_names,component = "comp 1",Y_name = "bodysite")
-#' feature_names <- HotLoadings.names(PSOBJ = diverse.ps, format = "short")
-#' head(feature_names)
+#' # HotLoadings.top_features(data.splsda = diverse.splsda,feature_names = feature_names,component = "comp 1",Y_name = "bodysite")
+#' # feature_names <- HotLoadings.names(PSOBJ = diverse.ps, format = "short")
+#' # head(feature_names)
 
 HotLoadings.top_features <- function(data.splsda, feature_names, component = c("comp 1"),Y_name,n_top = 15,offset = 0.005, order = TRUE){
   # Generate a df with loadings and feature names for the selected component
