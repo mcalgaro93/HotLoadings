@@ -6,6 +6,7 @@
 #' @param Y_name A character string indicating which is the variable associated with component specified. Must be a dicothomous variable.
 #' @param n_top An integer number indicating how many top associated features to keep. (Default = 15)
 #' @param offset A value indicating the amount of justification from axis for possible plots. (Default = 0.005)
+#' @param order A boolean value indicating if the loadings should be separately ordered by positives and negatives (Default = TRUE). If FALSE loadings are ordered using their absolute value.
 #' @return A data frame containings \code{n_top} feature associated with \code{component} with information about interesting \code{Y_name} variable.
 #' @seealso \code{\link{HotLoadings.names}} for extraction of \code{feature_names}
 #' @examples
@@ -33,7 +34,7 @@
 #' feature_names <- HotLoadings.names(PSOBJ = diverse.ps, format = "short")
 #' head(feature_names)
 
-HotLoadings.top_features <- function(data.splsda, feature_names, component = c("comp 1"),Y_name,n_top = 15,offset = 0.005){
+HotLoadings.top_features <- function(data.splsda, feature_names, component = c("comp 1"),Y_name,n_top = 15,offset = 0.005, order = TRUE){
   # Generate a df with loadings and feature names for the selected component
   loadings_df <- data.frame(loadings = data.splsda$loadings$X[,component],feature = feature_names)
   loadings_df <- loadings_df[order(abs(loadings_df$loadings),decreasing = TRUE),]
@@ -46,7 +47,8 @@ HotLoadings.top_features <- function(data.splsda, feature_names, component = c("
   # Selection top n features
   top_features <- loadings_df[1:n_top,]
   # Ordering
-  top_features <- top_features[order(top_features$loadings),]
+  if(order)
+    top_features <- top_features[order(top_features$loadings),]
   # Convert to factor to retain sorted order in possible plot.
   top_features$feature <- factor(top_features$feature, levels = top_features$feature)
   # Generate a variable for text justification
