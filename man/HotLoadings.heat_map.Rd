@@ -6,7 +6,7 @@
 \usage{
 HotLoadings.heat_map(PSOBJ, format = c("short", "last", "long"),
   data.splsda, Y_name, component, n_top = 15, sample_name,
-  offset = 0.005)
+  offset = 0.005, order = TRUE)
 }
 \arguments{
 \item{PSOBJ}{A phyloseq object.}
@@ -24,6 +24,8 @@ HotLoadings.heat_map(PSOBJ, format = c("short", "last", "long"),
 \item{sample_name}{A character string indicating which is the variable with sample names.}
 
 \item{offset}{A value indicating the amount of justification from axis for possible plots. (Default = 0.005)}
+
+\item{order}{A boolean value indicating if the loadings should be separately ordered by positives and negatives (Default = TRUE). If FALSE loadings are ordered using their absolute value.}
 }
 \value{
 The function plots heatmap for \code{n_top} features in rows and samples in columns.

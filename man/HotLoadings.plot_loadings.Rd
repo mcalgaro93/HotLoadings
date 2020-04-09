@@ -6,8 +6,8 @@
 \usage{
 HotLoadings.plot_loadings(PSOBJ, format = c("short", "last", "long"),
   data.splsda, Y_name, component, n_top = 15, offset = 0.005,
-  xlim = c(-0.3, 0.3), colors = c("orange", "red", "blue",
-  "dark green"))
+  order = TRUE, xlim = c(-0.3, 0.3), colors = c("orange", "red",
+  "blue", "dark green"))
 }
 \arguments{
 \item{PSOBJ}{A phyloseq object.}
@@ -23,6 +23,8 @@ HotLoadings.plot_loadings(PSOBJ, format = c("short", "last", "long"),
 \item{n_top}{An integer number indicating how many top associated features to keep. (Default = 15)}
 
 \item{offset}{A value indicating the amount of justification from axis for possible plots. (Default = 0.005)}
+
+\item{order}{A boolean value indicating if the loadings should be separately ordered by positives and negatives (Default = TRUE). If FALSE loadings are ordered using their absolute value.}
 
 \item{xlim}{Vector of size 2 containings plot limits for x axis of the graphic (default is -0.3, 0.3).}
 
