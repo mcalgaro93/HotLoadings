@@ -88,8 +88,9 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
   require(reshape2)
   require(ggplot2)
   # Input data
-  tss_matrix <- apply((PSOBJ@otu_table@.Data)+1,2,function(x) x/sum(x))
-  clr_matrix <- t(apply(tss_matrix,2,function(x) log(x)-mean(log(x))))
+  # tss_matrix <- apply((PSOBJ@otu_table@.Data)+1,2,function(x) x/sum(x))
+  # clr_matrix <- t(apply(tss_matrix,2,function(x) log(x)-mean(log(x))))
+  clr_matrix <- data.splsda$X
   # Top n taxa
   clr_matrix_sel <- clr_matrix[,match(rownames(top_feature),colnames(clr_matrix))]
   rownames(clr_matrix_sel) <- paste(unlist(PSOBJ@sam_data[,sample_name]),unlist(PSOBJ@sam_data[,Y_name]),sep = "-")
