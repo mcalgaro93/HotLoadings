@@ -23,31 +23,64 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
   minmincol = colors[2]
   plumincol = colors[4]
   pluplucol = colors[3]
-  ggplot(top_feature_combined,aes(x = feature,y = proportions)) +
-    geom_bar(stat = "identity",aes(fill = combined)) +
+
+  max_load <- max(abs(top_feature_combined$loadings))
+  xlim <- c(-max_load,max_load)
+
+  g_base <- ggplot(top_feature_combined,aes(x = feature,y = proportions)) +
     # feature names
     geom_text(data = top_feature,aes(x = feature, y = offset, label = feature),hjust = top_feature$just) +
-    # class - in +
-    geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
-    # class - in -
-    geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[1], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
-    # class + in -
-    geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[4], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
-    # class + in +
-    geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[3], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
     coord_flip(ylim = xlim) +
     theme_minimal() +
     theme(legend.position = "bottom") +
     scale_x_discrete("", labels=NULL) +
-    scale_fill_manual(values = c(minplucol,minmincol,plumincol,pluplucol),
-                      breaks = levels(top_feature_combined$combined),
-                      labels = c(paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[2],split = " ")[[1]],collapse = " associated features in "),"samples"),
-                                 paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[1],split = " ")[[1]],collapse = " associated features in "),"samples"),
-                                 paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[4],split = " ")[[1]],collapse = " associated features in "),"samples"),
-                                 paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[3],split = " ")[[1]],collapse = " associated features in "),"samples"))) +
     ylab(label = "Loadings") + xlab("Features") +
     labs(fill = "Relative Abundances %:") +
     guides(fill = guide_legend(nrow=2,byrow=TRUE))
+
+  if(sum(top_feature_combined$loadings>0) == nrow(top_feature_combined)){
+    g_base +
+      geom_bar(stat = "identity",aes(fill = rev(combined))) +
+      # class + in -
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
+      # class + in +
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[1], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
+      scale_fill_manual(values = c(plumincol,pluplucol),
+                        breaks = levels(top_feature_combined$combined)[3:4],
+                        labels = c(paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[2],split = " ")[[1]],collapse = " associated features in "),"samples"),
+                                   paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[1],split = " ")[[1]],collapse = " associated features in "),"samples")))
+
+  } else if(sum(top_feature_combined$loadings<0) == nrow(top_feature_combined)){
+    g_base +
+      geom_bar(stat = "identity",aes(fill = combined)) +
+      # class + in -
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
+      # class + in +
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[1], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
+      scale_fill_manual(values = c(plumincol,pluplucol),
+                        breaks = levels(top_feature_combined$combined)[1:2],
+                        labels = c(paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[2],split = " ")[[1]],collapse = " associated features in "),"samples"),
+                                   paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[1],split = " ")[[1]],collapse = " associated features in "),"samples")))
+
+  } else {
+    # class - in +
+    g_base +
+      geom_bar(stat = "identity",aes(fill = combined)) +
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
+      # class - in -
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[1], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
+      # class + in -
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[4], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
+      # class + in +
+      geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[3], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
+
+      scale_fill_manual(values = c(minplucol,minmincol,plumincol,pluplucol),
+                        breaks = levels(top_feature_combined$combined),
+                        labels = c(paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[2],split = " ")[[1]],collapse = " associated features in "),"samples"),
+                                   paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[1],split = " ")[[1]],collapse = " associated features in "),"samples"),
+                                   paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[4],split = " ")[[1]],collapse = " associated features in "),"samples"),
+                                   paste(paste(strsplit(as.character(unique(top_feature_combined$combined))[3],split = " ")[[1]],collapse = " associated features in "),"samples")))
+  }
 }
 
 #' Plot Loadings the short way
