@@ -28,6 +28,7 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
   xlim <- c(-max_load,max_load)
 
   g_base <- ggplot(top_feature_combined,aes(x = feature,y = proportions)) +
+    geom_bar(stat = "identity",aes(fill = rev(combined))) +
     # feature names
     geom_text(data = top_feature,aes(x = feature, y = offset, label = feature),hjust = top_feature$just) +
     coord_flip(ylim = xlim) +
@@ -40,7 +41,6 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
 
   if(sum(top_feature_combined$loadings>0) == nrow(top_feature_combined)){
     g_base +
-      geom_bar(stat = "identity",aes(fill = rev(combined))) +
       # class + in -
       geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
       # class + in +
@@ -52,7 +52,6 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
 
   } else if(sum(top_feature_combined$loadings<0) == nrow(top_feature_combined)){
     g_base +
-      geom_bar(stat = "identity",aes(fill = combined)) +
       # class + in -
       geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
       # class + in +
@@ -65,7 +64,6 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
   } else {
     # class - in +
     g_base +
-      geom_bar(stat = "identity",aes(fill = combined)) +
       geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[2], ],aes(x = feature, y = loadings + just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "left",color = "white") +
       # class - in -
       geom_text(data = top_feature_combined[top_feature_combined$combined == unique(top_feature_combined$combined)[1], ],aes(x = feature, y = just,label = paste(round(Relative_Abundance*100,digits = 2),"%")),hjust = "right",color = "white") +
