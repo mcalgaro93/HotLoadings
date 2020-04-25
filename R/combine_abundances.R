@@ -9,7 +9,7 @@
 
 HotLoadings.combine_abundances <- function(top_features,mean_relative_abundances,Y_name){
   # Calculate proportion between 2 conditions.
-  Y_levels <- unique(mean_relative_abundances[,Y_name])
+  Y_levels <- unique(top_features[,Y_name])
   other_indexes <- c(nrow(top_features)+1,2*(nrow(top_features)+1))
   mean_relative_abundances <- mean_relative_abundances[-other_indexes,]
   tot_prob <- mean_relative_abundances$Relative_Abundance[mean_relative_abundances[,Y_name]==Y_levels[1]]+mean_relative_abundances$Relative_Abundance[mean_relative_abundances[,Y_name]==Y_levels[2]]

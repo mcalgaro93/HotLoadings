@@ -24,13 +24,12 @@ HotLoadings.mean_relative_abundances <- function(top_features,PSOBJ,Y_name){
   comparison_aggr_rel <- aggregate(t(otuTabRel), PSOBJ@sam_data[,Y_name]@.Data, mean)
   # We keep only the levels that are present in top_features
   present_index <- which(comparison_aggr_rel[,1] %in%  unique(top_features[,Y_name]))
-  if(length(present_index) > 1)
-    comparison_aggr_rel <- comparison_aggr_rel[present_index,]
+  comparison_aggr_rel <- comparison_aggr_rel[present_index,]
   meanRelAbundances_df <- data.frame(rbind(t(comparison_aggr_rel[1,-1]), t(comparison_aggr_rel[2,-1])), rep(comparison_aggr_rel[,1],each = nrow(top_features)+1))
   # Add taxa name as factor variable
   meanRelAbundances_df$feature <- rep(rownames(otuTab),2)
   colnames(meanRelAbundances_df) <- c("Relative_Abundance",Y_name,"feature")
-  meanRelAbundances_df[,Y_name] <- factor(meanRelAbundances_df[,Y_name],levels = unique(comparison_aggr_rel[,1]),ordered = TRUE)
+  meanRelAbundances_df[,Y_name] <- factor(meanRelAbundances_df[,Y_name],levels = unique(top_features[,Y_name]),ordered = TRUE)
   return(meanRelAbundances_df[order(meanRelAbundances_df[,Y_name],decreasing = TRUE),])
 }
 
