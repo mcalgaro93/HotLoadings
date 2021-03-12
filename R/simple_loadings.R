@@ -36,12 +36,15 @@ HotLoadings.plot_loadings_simple <- function(PSOBJ, format = c("short", "last","
     Y_levels <- unique(Y)
   }
   df_ordered$GroupContrib <- factor(df_ordered$GroupContrib, levels = Y_levels, ordered = TRUE)
-  if (length(colors) != length(Y_levels)) {
-    stop("Number of colors and number of levels are different.")
-  }
+
   if (is.null(colors)) {
     colors <- RColorBrewer::brewer.pal(max(length(Y_levels), 3), name = "Set1")[1:length(Y_levels)]
   }
+
+  if (length(colors) != length(Y_levels)) {
+    stop("Number of colors and number of levels are different.")
+  }
+
   df_ordered$color <- factor(df_ordered$GroupContrib, levels = Y_levels, labels = colors)
 
   p_loadings <- ggplot(df_ordered, aes(x = rownames(df_ordered), y = importance, fill = GroupContrib)) +
