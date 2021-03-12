@@ -18,5 +18,6 @@ Imports:
     reshape2,
     scales,
     cowplot,
-    mixOmics
-RoxygenNote: 6.1.1
+    mixOmics,
+    RColorBrewer
+RoxygenNote: 7.1.1

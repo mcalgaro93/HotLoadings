@@ -4,9 +4,15 @@
 \alias{HotLoadings.top_features}
 \title{Select top features}
 \usage{
-HotLoadings.top_features(data.splsda, feature_names,
-  component = c("comp 1"), Y_name, n_top = 15, offset = 0.005,
-  order = TRUE)
+HotLoadings.top_features(
+  data.splsda,
+  feature_names,
+  component = c("comp 1"),
+  Y_name,
+  n_top = 15,
+  offset = 0.005,
+  order = TRUE
+)
 }
 \arguments{
 \item{data.splsda}{A sPLS-DA object from mixomics.}

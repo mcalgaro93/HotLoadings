@@ -4,9 +4,17 @@
 \alias{HotLoadings.heat_map}
 \title{Plot Heatmap the short way}
 \usage{
-HotLoadings.heat_map(PSOBJ, format = c("short", "last", "long"),
-  data.splsda, Y_name, component, n_top = 15, sample_name,
-  offset = 0.005, order = TRUE)
+HotLoadings.heat_map(
+  PSOBJ,
+  format = c("short", "last", "long"),
+  data.splsda,
+  Y_name,
+  component,
+  n_top = 15,
+  sample_name,
+  offset = 0.005,
+  order = TRUE
+)
 }
 \arguments{
 \item{PSOBJ}{A phyloseq object.}

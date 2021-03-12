@@ -4,8 +4,14 @@
 \alias{HotLoadings.heat_map_long}
 \title{Plot Heatmap the long way}
 \usage{
-HotLoadings.heat_map_long(data.splsda, top_feature, PSOBJ, sample_name,
-  Y_name, feature_names)
+HotLoadings.heat_map_long(
+  data.splsda,
+  top_feature,
+  PSOBJ,
+  sample_name,
+  Y_name,
+  feature_names
+)
 }
 \arguments{
 \item{data.splsda}{A sPLS-DA object from mixomics.}

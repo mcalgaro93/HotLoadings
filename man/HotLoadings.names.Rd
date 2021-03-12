@@ -17,9 +17,3 @@ A data frame containings feature names in wanted format.
 \description{
 Extract feature names
 }
-\examples{
-library(phyloseq)
-data("GlobalPatterns")
-feature_names <- HotLoadings.names(PSOBJ = GlobalPatterns, format = "short")
-head(feature_names)
-}

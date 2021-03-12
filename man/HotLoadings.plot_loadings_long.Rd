@@ -4,9 +4,12 @@
 \alias{HotLoadings.plot_loadings_long}
 \title{Plot Loadings the long way}
 \usage{
-HotLoadings.plot_loadings_long(top_feature, top_feature_combined,
-  xlim = c(-0.3, 0.3), colors = c("orange", "red", "blue",
-  "dark green"))
+HotLoadings.plot_loadings_long(
+  top_feature,
+  top_feature_combined,
+  xlim = c(-0.3, 0.3),
+  colors = c("orange", "red", "blue", "dark green")
+)
 }
 \arguments{
 \item{xlim}{Vector of size 2 containings plot limits for x axis of the graphic (default is -0.3, 0.3).}

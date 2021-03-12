@@ -4,10 +4,18 @@
 \alias{HotLoadings.plot_loadings}
 \title{Plot Loadings the short way}
 \usage{
-HotLoadings.plot_loadings(PSOBJ, format = c("short", "last", "long"),
-  data.splsda, Y_name, component, n_top = 15, offset = 0.005,
-  order = TRUE, xlim = c(-0.3, 0.3), colors = c("orange", "red",
-  "blue", "dark green"))
+HotLoadings.plot_loadings(
+  PSOBJ,
+  format = c("short", "last", "long"),
+  data.splsda,
+  Y_name,
+  component,
+  n_top = 15,
+  offset = 0.005,
+  order = TRUE,
+  xlim = c(-0.3, 0.3),
+  colors = c("orange", "red", "blue", "dark green")
+)
 }
 \arguments{
 \item{PSOBJ}{A phyloseq object.}

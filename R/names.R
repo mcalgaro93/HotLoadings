@@ -3,11 +3,6 @@
 #' @param PSOBJ A phyloseq object.
 #' @param format "last" if only the deepest taxonomic characterization is needed. "long" if all taxonomic levels are needed. "short" if last 2 known taxonomic levels are needed.
 #' @return A data frame containings feature names in wanted format.
-#' @examples
-#' library(phyloseq)
-#' data("GlobalPatterns")
-#' feature_names <- HotLoadings.names(PSOBJ = GlobalPatterns, format = "short")
-#' head(feature_names)
 
 HotLoadings.names <- function(PSOBJ,format = c("last","long","short")){
   # Pasting togheter names from Kingdom to the deepest characterisation for each taxa
