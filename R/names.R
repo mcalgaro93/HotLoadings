@@ -1,5 +1,5 @@
 #' Extract feature names
-#'
+#' @export
 #' @param PSOBJ A phyloseq object.
 #' @param format "last" if only the deepest taxonomic characterization is needed. "long" if all taxonomic levels are needed. "short" if last 2 known taxonomic levels are needed.
 #' @return A data frame containings feature names in wanted format.

@@ -9,7 +9,7 @@ HotLoadings(g_loadings, g_heat_map, rel_widths = c(1, 1))
 \arguments{
 \item{g_loadings}{a ggplot object obtained with \code{\link{HotLoadings.plot_loadings}} or \code{\link{HotLoadings.plot_loadings_long}}}
 
-\item{g_heat_map}{a ggplot object obtained with \code{\link{HotLoadings.plot_heat_map}} or \code{\link{HotLoadings.plot_heat_map_long}}}
+\item{g_heat_map}{a ggplot object obtained with \code{\link{HotLoadings.heat_map}} or \code{\link{HotLoadings.heat_map_long}}}
 
 \item{rel_widths}{Numerical vector of relative columns widths. For example, in a two-column grid, rel_widths = c(2, 1) would make the first column twice as wide as the second column.}
 }

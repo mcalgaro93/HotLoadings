@@ -9,7 +9,7 @@ Description: A simple way to add information to mixomics loadings.
     Creates nice to see feature names in different formats starting from a phyloseq object.
     Computes mean relative abundances of top n features and compares abundance between 2 condition.
     Adds ordered heatmap next to loadings plot in order to obtain a complete representation of top associated features and their presence in samples.
-License: Open source
+License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Imports:

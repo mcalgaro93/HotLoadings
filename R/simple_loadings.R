@@ -1,7 +1,9 @@
 #' @title HotLoadings.plot_loadings_simple
 #' Plot Loadings the simple way
+#' @export
 #' @importFrom mixOmics plotLoadings
 #' @importFrom RColorBrewer brewer.pal
+#' @import ggplot2
 #' @inheritParams HotLoadings.names
 #' @inheritParams HotLoadings.plot_loadings
 #' @inheritParams mixOmics::plotLoadings
