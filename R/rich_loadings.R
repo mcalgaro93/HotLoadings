@@ -126,7 +126,7 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
     scale_fill_gradientn(colours = c("#051591","#FFFF10","#F00F47"),values = c(0,zeropoint,1))
 
   if(!is.null(facet_formula))
-      gHeat + facet_grid(facet_formula, scales = "free_x", space = "free_x")
+      gHeat <- gHeat + facet_grid(facet_formula, scales = "free_x", space = "free_x")
 
   gHeat
 }
