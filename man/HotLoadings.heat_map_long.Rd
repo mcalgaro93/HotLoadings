@@ -10,7 +10,8 @@ HotLoadings.heat_map_long(
   PSOBJ,
   sample_name,
   Y_name,
-  feature_names
+  feature_names,
+  facet_formula = NULL
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ HotLoadings.heat_map_long(
 \item{Y_name}{A character string indicating which is the variable associated with component specified. Must be a dicothomous variable.}
 
 \item{feature_names}{A character vector containing feature names.}
+
+\item{facet_formula}{A formula for facetting (default is NULL).}
 }
 \value{
 The function plots heatmap for \code{n_top} features in rows and samples in columns.

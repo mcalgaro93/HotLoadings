@@ -85,11 +85,12 @@ HotLoadings.plot_loadings <- function(PSOBJ,format = c("short","last","long"),da
 #' @param sample_name A character string indicating which is the variable with sample names.
 #' @param Y_name A character string indicating which is the variable associated with component specified. Must be a dicothomous variable.
 #' @param feature_names A character vector containing feature names.
+#' @param facet_formula A formula for facetting (default is NULL).
 #' @return The function plots heatmap for \code{n_top} features in rows and samples in columns.
 #' @seealso \code{\link{HotLoadings.plot_loadings_long}} or \code{\link{HotLoadings.plot_loadings}} to plot loadings.
 
 
-HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,Y_name,feature_names){
+HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,Y_name,feature_names,facet_formula = NULL){
   # Input data
   # tss_matrix <- apply((PSOBJ@otu_table@.Data)+1,2,function(x) x/sum(x))
   # clr_matrix <- t(apply(tss_matrix,2,function(x) log(x)-mean(log(x))))
@@ -97,18 +98,25 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
   # Top n taxa
   clr_matrix_sel <- clr_matrix[,match(rownames(top_feature),colnames(clr_matrix))]
   rownames(clr_matrix_sel) <- paste(unlist(PSOBJ@sam_data[,sample_name]),unlist(PSOBJ@sam_data[,Y_name]),sep = "-")
+  other_metadata <- data.frame(PSOBJ@sam_data)
+  rownames(other_metadata) <- rownames(clr_matrix_sel)
   colnames(clr_matrix_sel) <- feature_names[match(rownames(top_feature),colnames(clr_matrix))]
   clr_matrix_sel <- clr_matrix_sel[order(rownames(clr_matrix_sel)),]
   clr_matrix_sel <- clr_matrix_sel[order(gsub(x = rownames(clr_matrix_sel),pattern = "[A-Z][0-9]*[ ]*[-]",replacement = "")),]
-
+  other_metadata <- other_metadata[rownames(clr_matrix_sel),]
   # Create a data frame from clr matrix
   clr_matrix_sel_melt <- reshape2::melt(clr_matrix_sel)
-  colnames(clr_matrix_sel_melt) <- c(Y_name,"feature","clr")
+  colnames(clr_matrix_sel_melt) <- c("ticknames","feature","clr")
+  repeated_other_metadata <- apply(other_metadata, 2, function(x) rep(x, nrow(top_feature)))
+  clr_matrix_sel_melt <- cbind(clr_matrix_sel_melt, repeated_other_metadata)
+  if(!is.null(facet_formula)){
+      clr_matrix_sel_melt[,"ticknames"] <- clr_matrix_sel_melt[, sample_name]
+  }
   # clr_matrix_sel_melt$clr_rescale <- rescale(clr_matrix_sel_melt$clr)
 
   zeropoint <- -min(clr_matrix_sel_melt$clr)/(max(clr_matrix_sel_melt$clr)-min(clr_matrix_sel_melt$clr))
 
-  ggplot(clr_matrix_sel_melt,aes(clr_matrix_sel_melt[,Y_name],y = feature, fill = clr)) +
+  gHeat <- ggplot(clr_matrix_sel_melt,aes(x = ticknames ,y = feature, fill = clr)) +
     geom_tile(colour = "white") +
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45,hjust = 1,vjust = 1),
@@ -116,6 +124,11 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
           legend.position = "bottom") +
     labs(x = "Sample",y = "", fill = "Centered Log Ratio") +
     scale_fill_gradientn(colours = c("#051591","#FFFF10","#F00F47"),values = c(0,zeropoint,1))
+
+  if(!is.null(facet_formula))
+      gHeat + facet_grid(facet_formula, scales = "free_x", space = "free_x")
+
+  gHeat
 }
 
 #' Plot Heatmap the short way
@@ -125,13 +138,14 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
 #' @inheritParams HotLoadings.names
 #' @inheritParams HotLoadings.top_features
 #' @param sample_name A character string indicating which is the variable with sample names.
+#' @param facet_formula A formula for facetting (default is NULL).
 #' @return The function plots heatmap for \code{n_top} features in rows and samples in columns.
 #' @seealso \code{\link{HotLoadings.plot_loadings_long}} or \code{\link{HotLoadings.plot_loadings}} to plot loadings.
 
-HotLoadings.heat_map <- function(PSOBJ,format = c("short","last","long"),data.splsda,Y_name,component,n_top = 15,sample_name,offset = 0.005, order = TRUE){
+HotLoadings.heat_map <- function(PSOBJ,format = c("short","last","long"),data.splsda,Y_name,component,n_top = 15,sample_name,offset = 0.005, order = TRUE, facet_formula = NULL){
   feature_names <- HotLoadings.names(PSOBJ = PSOBJ,format = format)
   df_top_n <- HotLoadings.top_features(data.splsda = data.splsda,feature_names = feature_names,component = component,Y_name = Y_name,n_top = n_top,offset = offset, order = order)
-  HotLoadings.heat_map_long(data.splsda = data.splsda,top_feature = df_top_n,PSOBJ = PSOBJ,sample_name = sample_name,Y_name = Y_name,feature_names = feature_names)
+  HotLoadings.heat_map_long(data.splsda = data.splsda,top_feature = df_top_n,PSOBJ = PSOBJ,sample_name = sample_name,Y_name = Y_name,feature_names = feature_names, facet_formula = facet_formula)
 }
 
 #' Plot Loadings and Heatmap in a sexy way

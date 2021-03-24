@@ -13,7 +13,8 @@ HotLoadings.heat_map(
   n_top = 15,
   sample_name,
   offset = 0.005,
-  order = TRUE
+  order = TRUE,
+  facet_formula = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ HotLoadings.heat_map(
 \item{offset}{A value indicating the amount of justification from axis for possible plots. (Default = 0.005)}
 
 \item{order}{A boolean value indicating if the loadings should be separately ordered by positives and negatives (Default = TRUE). If FALSE loadings are ordered using their absolute value.}
+
+\item{facet_formula}{A formula for facetting (default is NULL).}
 }
 \value{
 The function plots heatmap for \code{n_top} features in rows and samples in columns.
