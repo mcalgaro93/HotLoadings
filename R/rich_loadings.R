@@ -99,11 +99,16 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
   clr_matrix_sel <- clr_matrix[,match(rownames(top_feature),colnames(clr_matrix))]
   rownames(clr_matrix_sel) <- paste(unlist(PSOBJ@sam_data[,sample_name]),unlist(PSOBJ@sam_data[,Y_name]),sep = "-")
   other_metadata <- data.frame(PSOBJ@sam_data)
-  rownames(other_metadata) <- rownames(clr_matrix_sel)
+  other_metadata$sample_name.Y_name <- rownames(clr_matrix_sel)
   colnames(clr_matrix_sel) <- feature_names[match(rownames(top_feature),colnames(clr_matrix))]
-  clr_matrix_sel <- clr_matrix_sel[order(rownames(clr_matrix_sel)),]
-  clr_matrix_sel <- clr_matrix_sel[order(gsub(x = rownames(clr_matrix_sel),pattern = "[A-Z][0-9]*[ ]*[-]",replacement = "")),]
-  other_metadata <- other_metadata[rownames(clr_matrix_sel),]
+  # Order by rownames
+  ord_rownames <- order(rownames(clr_matrix_sel))
+  clr_matrix_sel <- clr_matrix_sel[ord_rownames,]
+  other_metadata <- other_metadata[ord_rownames,]
+  # Order by rownames cleaned
+  ord_rownames_cleaned <- order(gsub(x = rownames(clr_matrix_sel),pattern = "[A-Z][0-9]*[ ]*[-]",replacement = ""))
+  clr_matrix_sel <- clr_matrix_sel[ord_rownames_cleaned,]
+  other_metadata <- other_metadata[ord_rownames_cleaned,]
   # Create a data frame from clr matrix
   clr_matrix_sel_melt <- reshape2::melt(clr_matrix_sel)
   colnames(clr_matrix_sel_melt) <- c("ticknames","feature","clr")
@@ -127,7 +132,6 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
 
   if(!is.null(facet_formula))
       gHeat <- gHeat + facet_grid(facet_formula, scales = "free_x", space = "free_x")
-
   gHeat
 }
 
