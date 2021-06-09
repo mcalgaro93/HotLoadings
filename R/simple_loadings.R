@@ -11,7 +11,7 @@
 #' of Y levels.
 #' @return The function return a ggplot2 loadings object.
 
-HotLoadings.plot_loadings_simple <- function(PSOBJ, format = c("short", "last","long"),
+HotLoadings.plot_loadings_simple <- function(PSOBJ, format = c("short", "last","long","none"),
                                              data.splsda,
                                              method = "mean",
                                              contrib = "max",

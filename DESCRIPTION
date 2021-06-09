@@ -1,7 +1,7 @@
 Package: HotLoadings
 Type: Package
 Title: HotLoadings: a fancy way to plot mixOmics loadings and heatmaps
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: person("Matteo", "Calgaro", email = "matteo.calgaro_01@univr.it",
   role = c("aut", "cre"))
 Maintainer: <matteo.calgaro_01@univr.it>

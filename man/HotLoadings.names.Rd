@@ -4,12 +4,14 @@
 \alias{HotLoadings.names}
 \title{Extract feature names}
 \usage{
-HotLoadings.names(PSOBJ, format = c("last", "long", "short"))
+HotLoadings.names(PSOBJ, format = c("last", "long", "short", "none"))
 }
 \arguments{
 \item{PSOBJ}{A phyloseq object.}
 
-\item{format}{"last" if only the deepest taxonomic characterization is needed. "long" if all taxonomic levels are needed. "short" if last 2 known taxonomic levels are needed.}
+\item{format}{"last" if only the deepest taxonomic characterization is needed.
+"long" if all taxonomic levels are needed. "short" if last 2 known taxonomic
+levels are needed. "none" for the SV/OTU number only.}
 }
 \value{
 A data frame containings feature names in wanted format.

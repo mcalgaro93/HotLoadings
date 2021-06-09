@@ -65,7 +65,7 @@ HotLoadings.plot_loadings_long <- function(top_feature,top_feature_combined,xlim
 #' @seealso \code{\link{HotLoadings.combine_abundances}} to create combined condition abundances data frame and \code{\link{HotLoadings.plot_loadings}} for plot in a single step.
 
 
-HotLoadings.plot_loadings <- function(PSOBJ,format = c("short","last","long"),data.splsda,Y_name,component,n_top = 15,offset = 0.005, order = TRUE, xlim = c(-0.3,0.3),colors = c("orange","red","blue","dark green")){
+HotLoadings.plot_loadings <- function(PSOBJ,format = c("short","last","long","none"),data.splsda,Y_name,component,n_top = 15,offset = 0.005, order = TRUE, xlim = c(-0.3,0.3),colors = c("orange","red","blue","dark green")){
   feature_names <- HotLoadings.names(PSOBJ = PSOBJ,format = format)
   df_top_n <- HotLoadings.top_features(data.splsda = data.splsda,feature_names = feature_names,component = component,Y_name = Y_name,n_top = n_top,offset = offset, order = order)
   mean_rel_ab <- HotLoadings.mean_relative_abundances(top_features = df_top_n,PSOBJ = PSOBJ,Y_name = Y_name)
@@ -146,7 +146,7 @@ HotLoadings.heat_map_long <- function(data.splsda,top_feature,PSOBJ,sample_name,
 #' @return The function plots heatmap for \code{n_top} features in rows and samples in columns.
 #' @seealso \code{\link{HotLoadings.plot_loadings_long}} or \code{\link{HotLoadings.plot_loadings}} to plot loadings.
 
-HotLoadings.heat_map <- function(PSOBJ,format = c("short","last","long"),data.splsda,Y_name,component,n_top = 15,sample_name,offset = 0.005, order = TRUE, facet_formula = NULL){
+HotLoadings.heat_map <- function(PSOBJ,format = c("short","last","long","none"),data.splsda,Y_name,component,n_top = 15,sample_name,offset = 0.005, order = TRUE, facet_formula = NULL){
   feature_names <- HotLoadings.names(PSOBJ = PSOBJ,format = format)
   df_top_n <- HotLoadings.top_features(data.splsda = data.splsda,feature_names = feature_names,component = component,Y_name = Y_name,n_top = n_top,offset = offset, order = order)
   HotLoadings.heat_map_long(data.splsda = data.splsda,top_feature = df_top_n,PSOBJ = PSOBJ,sample_name = sample_name,Y_name = Y_name,feature_names = feature_names, facet_formula = facet_formula)

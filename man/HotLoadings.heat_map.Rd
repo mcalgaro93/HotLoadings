@@ -6,7 +6,7 @@
 \usage{
 HotLoadings.heat_map(
   PSOBJ,
-  format = c("short", "last", "long"),
+  format = c("short", "last", "long", "none"),
   data.splsda,
   Y_name,
   component,
@@ -20,7 +20,9 @@ HotLoadings.heat_map(
 \arguments{
 \item{PSOBJ}{A phyloseq object.}
 
-\item{format}{"last" if only the deepest taxonomic characterization is needed. "long" if all taxonomic levels are needed. "short" if last 2 known taxonomic levels are needed.}
+\item{format}{"last" if only the deepest taxonomic characterization is needed.
+"long" if all taxonomic levels are needed. "short" if last 2 known taxonomic
+levels are needed. "none" for the SV/OTU number only.}
 
 \item{data.splsda}{A sPLS-DA object from mixomics.}
 
